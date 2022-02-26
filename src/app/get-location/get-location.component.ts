@@ -44,14 +44,12 @@ export class GetLocationComponent implements OnInit {
             );
             this.toaster.success("Weather data added successfully");
           }
-          this.zipCode = '';
+         
         })
-       
-        ;
       } else {
-        this.zipCode = '';
         this.toaster.warning("zipcode already exists.");
       }
+      this.zipCode = '';
     } else {
       this.toaster.warning("Please enter zipcode.");
     }

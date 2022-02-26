@@ -7,7 +7,7 @@ import { catchError, throwError } from 'rxjs';
 export class GetLocationService {
 
   constructor(
-    private http: HttpClient,
+    private http: HttpClient
   ) { }
 
   url = 'http://api.openweathermap.org/data/2.5/';
