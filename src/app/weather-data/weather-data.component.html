@@ -1,0 +1,31 @@
+<div class="row" *ngIf='weatherDetails && weatherDetails.length != 0; else nodata'>
+    <div *ngFor="let item of weatherDetails; let i = index" class="mt-4 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <fieldset>
+        <legend><b>{{ item.name }}</b></legend>
+        <div class="row p-3">
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <h6><small>Current Conditions: <b>{{ item.weather[0].main }}</b></small></h6>
+            <h6><small>Temperature: <b>{{ item.main.temp | temperatureConverter }} </b></small></h6>
+            <p>
+              Max :
+              {{ item.main.temp_max  | temperatureConverter}} - Min :
+              {{ item.main.temp_min  | temperatureConverter }}
+            </p>
+            <a  class="col-12" [routerLink]="['/forecast', item.zipcode]"><b>Show 5-day forecast for {{ item.name }}</b></a>           
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <img class="weather-img" *ngIf="item.weather[0].main === 'Clear'"
+              src="https://www.angulartraining.com/images/weather/sun.png" />
+            <img class="weather-img"
+              *ngIf="item.weather[0].main !== 'Clear'"
+                src="https://www.angulartraining.com/images/weather/{{item.weather[0].main | lowercase}}.png" />
+            <span class="close h4" (click)="remove(item.zipcode)" title="Remove">×</span>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <ng-template #nodata>
+    <h4 class="text-center mt-4">Data Not Available</h4>
+  </ng-template>
+  

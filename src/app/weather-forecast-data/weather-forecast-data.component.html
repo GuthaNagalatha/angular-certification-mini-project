@@ -1,0 +1,27 @@
+<section>
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-12">
+          <fieldset class="pb-3">
+            <legend><b>{{weatherForCastData?.city.name}}  ({{zipCode}})</b></legend>
+            <div class="mt-4">
+              <ul class="list-group" *ngIf="weatherForCastData && weatherForCastData.list.length > 0">
+                <ng-container *ngFor="let item of weatherForCastData.list; let i=index">
+                  <li class="list-group-item" *ngIf=" i !== 0 && i < 6">
+                    {{item.dt*1000 | date: 'EEEE'}}: {{item.weather[0].main}}
+                    - Max: {{item.temp.max | temperatureConverter}}
+                    - Min: {{item.temp.min | temperatureConverter}}
+                    <img class="icon" *ngIf="item.weather[0].main !=='Clear'"
+                      src="https://www.angulartraining.com/images/weather/{{item.weather[0].main | lowercase}}.png">
+                    <img class="icon" *ngIf="item.weather[0].main ==='Clear'"
+                      src="https://www.angulartraining.com/images/weather/sun.png">
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+          </fieldset>
+          <button id="backToMain" class="btn float-end mt-4"  [routerLink]="['/']" >Back to main page</button>      
+        </div>
+      </div>
+    </div>
+  </section>

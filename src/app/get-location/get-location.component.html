@@ -1,0 +1,24 @@
+<section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <fieldset class="pb-5 mt-5">
+            <legend><b>Add a Location</b></legend>
+            <div class= "row mt-4">
+              <div class="p-l col-6">
+                <label>Enter a Zipcode</label>
+                <input class="form-control" name = "enterZip" placeholder="Please Enter Zipcode" [(ngModel)]="zipCode" />
+              </div>
+              <div class="col-5">
+                <br />
+                <button class="btn" id="locationBtn" (click)="getLocationCurrentWeather(zipCode)">
+                  Add location
+                </button>
+              </div> 
+            </div>
+          </fieldset>
+          <app-weather-data (reload)="reload($event)" [weatherDetails] = "weatherDetails"></app-weather-data>  
+        </div>
+      </div>
+    </div>
+  </section>

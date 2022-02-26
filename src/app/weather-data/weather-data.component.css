@@ -1,0 +1,30 @@
+fieldset {
+    border: 1px solid #ccc;
+    position: relative;
+}
+legend {
+    position: absolute;
+    background-color: #fff;
+    font-size: 16px;
+    left: 10px;
+    width: auto;
+    top: -12px;
+    padding: 0 10px;
+} 
+
+.weather-img {
+    width: 100px;
+}
+.close {
+    position: absolute;
+    right: 0px;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    text-align: center;
+    color: black;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+
