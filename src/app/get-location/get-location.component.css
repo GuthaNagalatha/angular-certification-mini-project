@@ -23,3 +23,18 @@
   .h-p{
     padding: 20px;
   }
+  
+.weather-img {
+  width: 100px;
+}
+.close {
+  position: absolute;
+  right: 0px;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  text-align: center;
+  color: black;
+  line-height: 22px;
+  cursor: pointer;
+}

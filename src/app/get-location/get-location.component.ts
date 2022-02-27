@@ -1,6 +1,7 @@
 import { Component,  OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import {GetLocationService} from './get-location.service'
+import {GetLocationService} from './get-location.service';
+import { Weather } from '../shared/weather';
 @Component({
   selector: 'app-get-location',
   templateUrl: './get-location.component.html',
@@ -9,7 +10,7 @@ import {GetLocationService} from './get-location.service'
 
 export class GetLocationComponent implements OnInit {
 
-  weatherDetails: any;
+  weatherDetails: any = new Array();
   zipCode: string;
   constructor(
     private locationWeatherData: GetLocationService,
@@ -28,23 +29,27 @@ export class GetLocationComponent implements OnInit {
 
   // getting weather,location details using zipcode
   getLocationCurrentWeather(zipCode: string) {
+    let zipcode = zipCode;
     if (zipCode && zipCode !== '') {
       let existed = false;
-      this.weatherDetails.forEach((data:any) => {
-        if (data.zipcode === zipCode) existed = true;
-      });
+      if(this.weatherDetails){
+        this.weatherDetails.forEach((data:Weather) => {
+          if (data.zipcode === zipCode) existed = true;
+        });
+      }
       if (!existed) {
-        this.locationWeatherData.getWeatherDetails(zipCode).subscribe(data =>{
-          if(data) {
-            data = { ...data, zipcode: zipCode };
-            this.weatherDetails.push(data);
+        this.locationWeatherData.getWeatherDetails(zipCode).subscribe({next: (Weather)  =>{
+          if(Weather) {
+            this.weatherDetails.push({...Weather,zipcode:zipCode});
             localStorage.setItem(
               'weatherData',
               JSON.stringify(this.weatherDetails)
             );
-            this.toaster.success("Weather data added successfully");
+            this.toaster.success("Location Weather data added successfully");
           }
          
+        },
+        error: () => this.toaster.warning("Entered invalid Zipcode / data not available")
         })
       } else {
         this.toaster.warning("zipcode already exists.");
@@ -54,7 +59,16 @@ export class GetLocationComponent implements OnInit {
       this.toaster.warning("Please enter zipcode.");
     }
   }
-  reload(event:any){
-    this.getLocationCurrentWeatherData();
+  remove(zipcode: string) {
+    if (this.weatherDetails && this.weatherDetails.length > 0) {
+      this.weatherDetails = this.weatherDetails.filter((data:Weather) => data.zipcode !== zipcode);
+      this.toaster.success("Location Weather data removed Succesfully");
+      localStorage.setItem(
+        'weatherData',
+        JSON.stringify(this.weatherDetails)
+      );
+     
+    }
   }
+  
 }

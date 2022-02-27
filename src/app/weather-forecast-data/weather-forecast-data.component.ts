@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetLocationService } from '../get-location/get-location.service';
 
-
 @Component({
   selector: 'app-weather-forecast-data',
   templateUrl: './weather-forecast-data.component.html',
