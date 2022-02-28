@@ -1,7 +1,7 @@
 import { Component,  OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {GetLocationService} from './get-location.service';
-import { Weather } from '../shared/weather';
+import { WeatherData } from '../shared/weather-data';
 @Component({
   selector: 'app-get-location',
   templateUrl: './get-location.component.html',
@@ -10,7 +10,7 @@ import { Weather } from '../shared/weather';
 
 export class GetLocationComponent implements OnInit {
 
-  weatherDetails : Weather[] = [];
+  weatherDetails : WeatherData[] = new Array();
   zipCode: string;
   constructor(
     private locationWeatherData: GetLocationService,
@@ -32,15 +32,15 @@ export class GetLocationComponent implements OnInit {
     if (zipCode && zipCode !== '') {
       let existed = false;
       if(this.weatherDetails){
-        this.weatherDetails.forEach((data:Weather) => {
+        this.weatherDetails.forEach((data:WeatherData) => {
           if (data.zipcode === zipCode) existed = true;
         });
       }
       if (!existed) {
-        this.locationWeatherData.getWeatherDetails(zipCode).subscribe({next: (weather)  => {
-          if(weather) {
-            weather = {...weather,zipcode:zipCode};
-            let weatherData = weather as Weather;
+        this.locationWeatherData.getWeatherDetails(zipCode).subscribe({next: (WeatherData)  => {
+          if(WeatherData) {
+            WeatherData = {...WeatherData,zipcode:zipCode};
+            let weatherData = WeatherData as WeatherData;
             this.weatherDetails.push(weatherData);
             localStorage.setItem(
               'weatherData',
@@ -62,7 +62,7 @@ export class GetLocationComponent implements OnInit {
   }
   remove(zipcode: string) {
     if (this.weatherDetails && this.weatherDetails.length > 0) {
-      this.weatherDetails = this.weatherDetails.filter((data:Weather) => data.zipcode !== zipcode);
+      this.weatherDetails = this.weatherDetails.filter((data:WeatherData) => data.zipcode !== zipcode);
       this.toaster.success("Location Weather data removed Succesfully");
       localStorage.setItem(
         'weatherData',

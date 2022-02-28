@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetLocationService } from '../get-location/get-location.service';
-import { Forcast } from '../shared/forcast';
+import { ForecastData } from '../shared/forecast-data';
 
 @Component({
   selector: 'app-weather-forecast-data',
@@ -11,7 +11,7 @@ import { Forcast } from '../shared/forcast';
 export class WeatherForecastDataComponent implements OnInit {
 
   zipCode:string;
-  weatherForCastData: Forcast;
+  weatherForCastData: ForecastData;
   constructor(
     private activatedroute: ActivatedRoute,
     private locationWeatherData: GetLocationService
@@ -29,7 +29,7 @@ export class WeatherForecastDataComponent implements OnInit {
   // get 5days weather forecast details
   getFiveDaysWeatherForecast() {
     this.locationWeatherData.getWeatherForeCastDetails(this.zipCode).subscribe(data => {
-      this.weatherForCastData = data as Forcast;
+      this.weatherForCastData = data as ForecastData;
     });
   }
   
