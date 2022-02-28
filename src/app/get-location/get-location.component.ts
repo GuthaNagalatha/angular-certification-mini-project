@@ -10,7 +10,7 @@ import { Weather } from '../shared/weather';
 
 export class GetLocationComponent implements OnInit {
 
-  weatherDetails: any = new Array();
+  weatherDetails : Weather[] = [];
   zipCode: string;
   constructor(
     private locationWeatherData: GetLocationService,
@@ -29,7 +29,6 @@ export class GetLocationComponent implements OnInit {
 
   // getting weather,location details using zipcode
   getLocationCurrentWeather(zipCode: string) {
-    let zipcode = zipCode;
     if (zipCode && zipCode !== '') {
       let existed = false;
       if(this.weatherDetails){
@@ -38,9 +37,11 @@ export class GetLocationComponent implements OnInit {
         });
       }
       if (!existed) {
-        this.locationWeatherData.getWeatherDetails(zipCode).subscribe({next: (Weather)  =>{
-          if(Weather) {
-            this.weatherDetails.push({...Weather,zipcode:zipCode});
+        this.locationWeatherData.getWeatherDetails(zipCode).subscribe({next: (weather)  => {
+          if(weather) {
+            weather = {...weather,zipcode:zipCode};
+            let weatherData = weather as Weather;
+            this.weatherDetails.push(weatherData);
             localStorage.setItem(
               'weatherData',
               JSON.stringify(this.weatherDetails)
